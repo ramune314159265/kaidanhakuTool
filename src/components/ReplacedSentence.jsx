@@ -15,6 +15,7 @@ export const ReplacedSentence = () => {
 			paddingBlock="2"
 			h="full"
 			fontSize="md"
+			overflowY="auto"
 			borderWidth="1px"
 			borderColor="border"
 			borderRadius="sm"

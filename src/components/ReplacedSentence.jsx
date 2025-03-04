@@ -21,15 +21,14 @@ export const ReplacedSentence = () => {
 			lineHeight="1.75"
 		>
 			{
-				splitted.map(i => {
+				splitted.map((i, index) => {
 					switch (true) {
 						case replacementsFrom.includes(i): {
 							const to = replacements.find(e => e.from === i).to
 							return (
-								<Tooltip content={`${i} → ${to}`} showArrow openDelay="0" closeDelay="0">
+								<Tooltip key={index} content={`${i} → ${to}`} showArrow openDelay="0" closeDelay="0">
 									<Text
 										as="span"
-										key={Math.random()}
 										color="green.500"
 									>
 										{to}

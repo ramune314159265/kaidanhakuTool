@@ -9,31 +9,28 @@ import {
 	SelectTrigger,
 	SelectValueText
 } from "@/components/ui/select"
-import { Box, defineStyle, FieldLabel, FieldRoot, HStack, Input } from '@chakra-ui/react'
+import { defineStyle, Grid, Input } from '@chakra-ui/react'
 import { usePlayers } from '../atoms/players'
 import { jobsCollection } from '../utils/jobs'
 
 export const Player = ({ uuid }) => {
 	const [players, { editPlayer }] = usePlayers()
 	return (
-		<HStack w="full">
-			<FieldRoot w="100%">
-				<Box pos="relative" w="full">
-					<Input
-						w="full"
-						className="peer"
-						placeholder=""
-						size="xs"
-						value={players[uuid].name}
-						onChange={e => editPlayer(uuid, { name: e.target.value })}
-					></Input>
-					<FieldLabel css={floatingStyles} >名前</FieldLabel>
-				</Box>
-			</FieldRoot>
+		<Grid w="full" gap="2" templateColumns="1fr 6rem 3rem 3rem">
+			<Input
+				w="full"
+				aria-label="名前"
+				className="peer"
+				placeholder=""
+				size="xs"
+				value={players[uuid].name}
+				onChange={e => editPlayer(uuid, { name: e.target.value })}
+			></Input>
 
 			<SelectRoot
 				size="xs"
-				w="10rem"
+				w="full"
+				aria-label="役職"
 				collection={jobsCollection}
 				defaultValue={[players[uuid].jobId]}
 				onValueChange={e => editPlayer(uuid, { jobId: e.value[0] })}
@@ -50,39 +47,33 @@ export const Player = ({ uuid }) => {
 				</SelectContent>
 			</SelectRoot>
 
-			<FieldRoot w="5rem">
-				<Box>
-					<NumberInputRoot
-						size="xs"
-						min={1}
-						max={6}
-						allowOverflow={false}
-						className="peer"
-						value={players[uuid].rollValue}
-						onValueChange={e => editPlayer(uuid, { rollValue: e.value })}
-					>
-						<NumberInputField></NumberInputField>
-					</NumberInputRoot>
-					<FieldLabel css={floatingStyles} >数字</FieldLabel>
-				</Box>
-			</FieldRoot>
+			<NumberInputRoot
+				w="full"
+				size="xs"
+				aria-label="数字"
+				min={1}
+				max={6}
+				allowOverflow={false}
+				className="peer"
+				value={players[uuid].rollValue}
+				onValueChange={e => editPlayer(uuid, { rollValue: e.value })}
+			>
+				<NumberInputField></NumberInputField>
+			</NumberInputRoot>
 
-			<FieldRoot w="5rem">
-				<Box>
-					<NumberInputRoot
-						size="xs"
-						min={0}
-						allowMouseWheel
-						className="peer"
-						value={players[uuid].hp}
-						onValueChange={e => editPlayer(uuid, { hp: e.value })}
-					>
-						<NumberInputField></NumberInputField>
-					</NumberInputRoot>
-					<FieldLabel css={floatingStyles} >HP</FieldLabel>
-				</Box>
-			</FieldRoot>
-		</HStack>
+			<NumberInputRoot
+				w="full"
+				size="xs"
+				aria-label="HP"
+				min={0}
+				allowMouseWheel
+				className="peer"
+				value={players[uuid].hp}
+				onValueChange={e => editPlayer(uuid, { hp: e.value })}
+			>
+				<NumberInputField></NumberInputField>
+			</NumberInputRoot>
+		</Grid>
 	)
 }
 

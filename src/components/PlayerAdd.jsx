@@ -9,7 +9,8 @@ import {
 	SelectTrigger,
 	SelectValueText
 } from "@/components/ui/select"
-import { Box, defineStyle, FieldLabel, FieldRoot, HStack, IconButton, Input } from '@chakra-ui/react'
+import { Tooltip } from "@/components/ui/tooltip"
+import { Grid, IconButton, Input } from '@chakra-ui/react'
 import { useState } from 'react'
 import { HiMiniPlus } from 'react-icons/hi2'
 import { usePlayers } from '../atoms/players'
@@ -22,24 +23,21 @@ export const PlayerAdd = () => {
 	const [rollValue, setRollValue] = useState(1)
 
 	return (
-		<HStack w="full">
-			<FieldRoot w="100%">
-				<Box pos="relative" w="full">
-					<Input
-						w="full"
-						className="peer"
-						placeholder=""
-						size="xs"
-						value={name}
-						onChange={e => setName(e.target.value)}
-					></Input>
-					<FieldLabel css={floatingStyles} >名前</FieldLabel>
-				</Box>
-			</FieldRoot>
+		<Grid w="full" gap="2" templateColumns="1fr 6rem 3rem 3rem">
+			<Input
+				w="full"
+				aria-label="名前"
+				className="peer"
+				placeholder=""
+				size="xs"
+				value={name}
+				onChange={e => setName(e.target.value)}
+			></Input>
 
 			<SelectRoot
 				size="xs"
-				w="10rem"
+				w="full"
+				aria-label="役職"
 				collection={jobsCollection}
 				defaultValue={[jobId]}
 				onValueChange={e => setJobId(e.value[0])}
@@ -56,61 +54,39 @@ export const PlayerAdd = () => {
 				</SelectContent>
 			</SelectRoot>
 
-			<FieldRoot w="5rem">
-				<Box>
-					<NumberInputRoot
-						size="xs"
-						min={1}
-						max={6}
-						allowOverflow={false}
-						className="peer"
-						value={rollValue}
-						onValueChange={e => setRollValue(e.value)}
-					>
-						<NumberInputField></NumberInputField>
-					</NumberInputRoot>
-					<FieldLabel css={floatingStyles} >数字</FieldLabel>
-				</Box>
-			</FieldRoot>
-
-			<IconButton
+			<NumberInputRoot
+				w="full"
 				size="xs"
-				w="43px"
-				onClick={() => {
-					addPlayer({
-						uuid: crypto.randomUUID(),
-						name,
-						jobId,
-						rollValue
-					})
-					setName('')
-					setRollValue(1)
-				}}
+				aria-label="数字"
+				min={1}
+				max={6}
+				allowOverflow={false}
+				className="peer"
+				value={rollValue}
+				onValueChange={e => setRollValue(e.value)}
 			>
-				<HiMiniPlus></HiMiniPlus>
-			</IconButton>
-		</HStack>
+				<NumberInputField></NumberInputField>
+			</NumberInputRoot>
+
+			<Tooltip content="追加" showArrow>
+				<IconButton
+					size="xs"
+					w="full"
+					aria-label="追加"
+					onClick={() => {
+						addPlayer({
+							uuid: crypto.randomUUID(),
+							name,
+							jobId,
+							rollValue
+						})
+						setName('')
+						setRollValue(1)
+					}}
+				>
+					<HiMiniPlus></HiMiniPlus>
+				</IconButton>
+			</Tooltip>
+		</Grid>
 	)
 }
-
-const floatingStyles = defineStyle({
-	pos: "absolute",
-	bg: "bg",
-	px: "0.5",
-	fontSize: "xs",
-	top: "-3",
-	insetStart: "2",
-	fontWeight: "normal",
-	pointerEvents: "none",
-	transition: "position",
-	_peerPlaceholderShown: {
-		color: "fg.muted",
-		top: "1.5",
-		insetStart: "3",
-	},
-	_peerFocusVisible: {
-		color: "fg",
-		top: "-3",
-		insetStart: "2",
-	},
-})

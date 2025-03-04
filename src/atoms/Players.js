@@ -23,6 +23,7 @@ export const usePlayers = () => {
 
 	const addPlayer = ({ uuid, name, jobId, rollValue }) => {
 		setPlayers({
+			...players,
 			[uuid]: {
 				uuid,
 				name,
@@ -30,7 +31,6 @@ export const usePlayers = () => {
 				rollValue,
 				hp: jobs[jobId].hp
 			},
-			...players
 		})
 	}
 

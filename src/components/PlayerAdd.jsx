@@ -9,12 +9,18 @@ import {
 	SelectTrigger,
 	SelectValueText
 } from "@/components/ui/select"
-import { Box, defineStyle, FieldLabel, FieldRoot, HStack, Input } from '@chakra-ui/react'
+import { Box, defineStyle, FieldLabel, FieldRoot, HStack, IconButton, Input } from '@chakra-ui/react'
+import { useState } from 'react'
+import { HiMiniPlus } from 'react-icons/hi2'
 import { usePlayers } from '../atoms/players'
-import { jobsCollection } from '../utils/jobs'
+import { jobs, jobsCollection } from '../utils/jobs'
 
-export const Player = ({ uuid }) => {
-	const [players, { editPlayer }] = usePlayers()
+export const PlayerAdd = () => {
+	const [players, { addPlayer }] = usePlayers()
+	const [name, setName] = useState('')
+	const [jobId, setJobId] = useState(Object.values(jobs)[0].id)
+	const [rollValue, setRollValue] = useState(1)
+
 	return (
 		<HStack w="full">
 			<FieldRoot w="100%">
@@ -24,8 +30,8 @@ export const Player = ({ uuid }) => {
 						className="peer"
 						placeholder=""
 						size="xs"
-						value={players[uuid].name}
-						onChange={e => editPlayer(uuid, { name: e.target.value })}
+						value={name}
+						onChange={e => setName(e.target.value)}
 					></Input>
 					<FieldLabel css={floatingStyles} >名前</FieldLabel>
 				</Box>
@@ -35,8 +41,8 @@ export const Player = ({ uuid }) => {
 				size="xs"
 				w="10rem"
 				collection={jobsCollection}
-				defaultValue={[players[uuid].jobId]}
-				onValueChange={e => editPlayer(uuid, { jobId: e.value[0] })}
+				defaultValue={[jobId]}
+				onValueChange={e => setJobId(e.value[0])}
 			>
 				<SelectTrigger>
 					<SelectValueText placeholder="役職を選択"></SelectValueText>
@@ -58,8 +64,8 @@ export const Player = ({ uuid }) => {
 						max={6}
 						allowOverflow={false}
 						className="peer"
-						value={players[uuid].rollValue}
-						onValueChange={e => editPlayer(uuid, { rollValue: e.value })}
+						value={rollValue}
+						onValueChange={e => setRollValue(e.value)}
 					>
 						<NumberInputField></NumberInputField>
 					</NumberInputRoot>
@@ -67,21 +73,22 @@ export const Player = ({ uuid }) => {
 				</Box>
 			</FieldRoot>
 
-			<FieldRoot w="5rem">
-				<Box>
-					<NumberInputRoot
-						size="xs"
-						min={0}
-						allowMouseWheel
-						className="peer"
-						value={players[uuid].hp}
-						onValueChange={e => editPlayer(uuid, { hp: e.value })}
-					>
-						<NumberInputField></NumberInputField>
-					</NumberInputRoot>
-					<FieldLabel css={floatingStyles} >HP</FieldLabel>
-				</Box>
-			</FieldRoot>
+			<IconButton
+				size="xs"
+				w="43px"
+				onClick={() => {
+					addPlayer({
+						uuid: crypto.randomUUID(),
+						name,
+						jobId,
+						rollValue
+					})
+					setName('')
+					setRollValue(1)
+				}}
+			>
+				<HiMiniPlus></HiMiniPlus>
+			</IconButton>
 		</HStack>
 	)
 }

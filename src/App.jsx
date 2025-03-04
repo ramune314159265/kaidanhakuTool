@@ -2,6 +2,7 @@ import { Grid, GridItem } from '@chakra-ui/react'
 import { Header } from './components/Header'
 import { PlayerList } from './components/PlayerList'
 import { ReplacementList } from './components/ReplacementList'
+import { Sentences } from './components/Sentences'
 
 function App() {
     return (
@@ -15,7 +16,9 @@ function App() {
                         <GridItem>
                             <PlayerList></PlayerList>
                         </GridItem>
-                        <GridItem rowSpan={2}>b</GridItem>
+                        <GridItem rowSpan={2}>
+                            <Sentences></Sentences>
+                        </GridItem>
                         <GridItem>
                             <ReplacementList></ReplacementList>
                         </GridItem>

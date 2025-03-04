@@ -3,7 +3,6 @@ import { useReplacements } from '../atoms/replacements'
 
 export const Replacement = ({ index }) => {
 	const [replacements, { editReplacement }] = useReplacements()
-	console.log(replacements)
 	return (
 		<HStack w="full">
 			<FieldRoot w="50%">

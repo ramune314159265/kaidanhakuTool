@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/react'
-import { usePlayers } from '../atoms/Players'
+import { usePlayers } from '../atoms/players'
 import { Player } from './Player'
 
 export const PlayerList = () => {

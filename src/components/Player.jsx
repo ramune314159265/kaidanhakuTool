@@ -10,7 +10,7 @@ import {
 	SelectValueText
 } from "@/components/ui/select"
 import { Box, defineStyle, FieldLabel, FieldRoot, HStack, Input } from '@chakra-ui/react'
-import { usePlayers } from '../atoms/Players'
+import { usePlayers } from '../atoms/players'
 import { jobsCollection } from '../utils/jobs'
 
 export const Player = ({ uuid }) => {

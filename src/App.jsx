@@ -12,14 +12,14 @@ function App() {
                     <Header></Header>
                 </GridItem>
                 <GridItem w="full" h="full" p={4}>
-                    <Grid gap={4} templateColumns="1fr 1fr" templateRows="1fr 1fr" w="full" h="full">
-                        <GridItem>
+                    <Grid gap={4} templateColumns="repeat(2, calc(50% - calc(1rem / 2)))" templateRows="repeat(2, calc(50% - calc(1rem / 2)))" w="full" h="full">
+                        <GridItem overflow="auto" w="100%" h="100%">
                             <PlayerList></PlayerList>
                         </GridItem>
                         <GridItem rowSpan={2}>
                             <Sentences></Sentences>
                         </GridItem>
-                        <GridItem>
+                        <GridItem overflow="auto" w="100%" h="100%">
                             <ReplacementList></ReplacementList>
                         </GridItem>
                     </Grid>

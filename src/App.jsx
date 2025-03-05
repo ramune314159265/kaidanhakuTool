@@ -8,26 +8,22 @@ import { Sentences } from './components/Sentences'
 function App() {
     return (
         <>
-            <Grid templateRows="3rem 1fr" w="100%" h="100%">
-                <GridItem>
-                    <Header></Header>
-                </GridItem>
-                <GridItem w="full" h="full" p={4}>
-                    <Grid gap={4} templateColumns="repeat(2, calc(50% - calc(1rem / 2)))" templateRows="repeat(3, calc(33.3% - calc(1rem / 3)))" w="full" h="full">
-                        <GridItem overflow="auto" w="100%" h="100%">
-                            <PlayerList></PlayerList>
-                        </GridItem>
-                        <GridItem rowSpan={2}>
-                            <Sentences></Sentences>
-                        </GridItem>
-                        <GridItem rowSpan={2} overflow="auto" w="100%" h="100%">
-                            <ReplacementList></ReplacementList>
-                        </GridItem>
-                        <GridItem overflow="auto" w="100%" h="100%">
-                            <KeywordList></KeywordList>
-                        </GridItem>
-                    </Grid>
-                </GridItem>
+            <Grid templateRows="3rem calc(100% - 3rem)" w="100%" h="100%">
+                <Header></Header>
+                <Grid gap={4} p={4} templateColumns="repeat(2, calc(50% - calc(2rem / 2)))" templateRows="repeat(3, calc(33.3% - calc(2rem / 3)))" w="full" h="full">
+                    <GridItem overflow="auto" w="100%" h="100%">
+                        <PlayerList></PlayerList>
+                    </GridItem>
+                    <GridItem rowSpan={2}>
+                        <Sentences></Sentences>
+                    </GridItem>
+                    <GridItem rowSpan={2} overflow="auto" w="100%" h="100%">
+                        <ReplacementList></ReplacementList>
+                    </GridItem>
+                    <GridItem overflow="auto" w="100%" h="100%">
+                        <KeywordList></KeywordList>
+                    </GridItem>
+                </Grid>
             </Grid>
         </>
     )

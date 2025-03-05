@@ -6,7 +6,7 @@ import { KeywordAdd } from './KeywordAdd'
 export const KeywordList = () => {
 	const [keywords] = useKeywords()
 	return (
-		<HStack flexWrap={true}>
+		<HStack flexWrap="wrap">
 			{
 				keywords.map((keyword, index) => (
 					<Keyword key={index} index={index}></Keyword>

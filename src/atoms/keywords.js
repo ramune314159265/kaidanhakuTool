@@ -12,11 +12,17 @@ export const useKeywords = () => {
 		])
 	}
 
-	const editKeyword = (index, override) =>{
+	const editKeyword = (index, override) => {
 		const copy = [...keywords]
 		copy[index] = override
 		setKeywords(copy)
 	}
 
-	return [keywords, { setKeywords, addKeyword, editKeyword }]
+	const deleteKeyword = (index) => {
+		const copy = [...keywords]
+		copy.splice(index)
+		setKeywords(copy)
+	}
+
+	return [keywords, { setKeywords, addKeyword, editKeyword, deleteKeyword }]
 }

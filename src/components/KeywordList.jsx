@@ -1,16 +1,18 @@
 import { HStack } from '@chakra-ui/react'
 import { useKeywords } from '../atoms/keywords'
 import { Keyword } from './Keyword'
+import { KeywordAdd } from './KeywordAdd'
 
 export const KeywordList = () => {
-	const [keyword] = useKeywords()
+	const [keywords] = useKeywords()
 	return (
-		<HStack>
+		<HStack flexWrap={true}>
 			{
-				keyword.map((keyword, index) => (
+				keywords.map((keyword, index) => (
 					<Keyword key={index} index={index}></Keyword>
 				))
 			}
+			<KeywordAdd></KeywordAdd>
 		</HStack>
 	)
 }

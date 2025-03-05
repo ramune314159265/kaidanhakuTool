@@ -12,5 +12,11 @@ export const useKeywords = () => {
 		])
 	}
 
-	return [keywords, { setKeywords, addKeyword }]
+	const editKeyword = (index, override) =>{
+		const copy = [...keywords]
+		copy[index] = override
+		setKeywords(copy)
+	}
+
+	return [keywords, { setKeywords, addKeyword, editKeyword }]
 }

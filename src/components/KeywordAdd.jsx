@@ -20,6 +20,7 @@ export const KeywordAdd = () => {
 					size="sm"
 					border="none"
 					p="0"
+					placeholder="キーワード追加"
 					onChange={e => setKeyword(e.target.value)}
 					value={keyword}
 					onKeyDown={e => {

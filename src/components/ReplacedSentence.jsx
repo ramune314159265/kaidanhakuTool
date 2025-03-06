@@ -32,12 +32,12 @@ export const ReplacedSentence = () => {
 							key={index}
 							content={
 								i.data
-									.map(i => {
+									.map((i, index) => {
 										switch (i.type) {
 											case 'replacement':
-												return <Text>{`${i.from} → ${i.to}`}</Text>
+												return <Text key={index}>{`${i.from} → ${i.to}`}</Text>
 											case 'keyword':
-												return <Text>{`キーワード: ${i.keyword}`}</Text>
+												return <Text key={index}>{`キーワード: ${i.keyword}`}</Text>
 											default:
 												return ''
 										}
@@ -49,8 +49,8 @@ export const ReplacedSentence = () => {
 						>
 							<Text
 								as="span"
-								color={i.data.map(i=>i.type).includes('replacement') ? 'green.500' : null}
-								bg={i.data.map(i=>i.type).includes('keyword') ? 'yellow.solid' : null}
+								color={i.data.map(i => i.type).includes('replacement') ? 'green.500' : null}
+								bg={i.data.map(i => i.type).includes('keyword') ? 'yellow.solid' : null}
 							>
 								{i.content}
 							</Text>

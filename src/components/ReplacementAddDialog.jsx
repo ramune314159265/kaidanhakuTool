@@ -21,7 +21,7 @@ import {
 	SelectTrigger,
 	SelectValueText,
 } from "@/components/ui/select"
-import { Button, createListCollection, FieldLabel, FieldRoot, HStack, Input, VStack } from '@chakra-ui/react'
+import { AlertContent, AlertDescription, AlertIndicator, AlertRoot, AlertTitle, Button, createListCollection, FieldLabel, FieldRoot, HStack, Input, VStack } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { usePlayers } from '../atoms/players'
 import { useReplacements } from '../atoms/replacements'
@@ -118,6 +118,14 @@ export const ReplacementAddDialog = ({ children }) => {
 								<Input size="sm" value={replaceAfter} onChange={e => setReplaceAfter(e.target.value)}></Input>
 							</FieldRoot>
 						</HStack>
+
+						<AlertRoot>
+							<AlertIndicator></AlertIndicator>
+							<AlertContent>
+								<AlertTitle>{players[player].name}の役職({jobs[players[player].jobId].name})の効果</AlertTitle>
+								<AlertDescription>{jobs[players[player].jobId].description}</AlertDescription>
+							</AlertContent>
+						</AlertRoot>
 					</VStack>
 
 				</DialogBody>

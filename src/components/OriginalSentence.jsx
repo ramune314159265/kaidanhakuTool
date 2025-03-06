@@ -11,7 +11,7 @@ export const OriginalSentence = () => {
 			resize="none"
 			h="full"
 			fontSize="md"
-			lineHeight="1.75"
+			lineHeight="tall"
 		/>
 	)
 }

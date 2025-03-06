@@ -21,7 +21,7 @@ export const ReplacedSentence = () => {
 			borderWidth="1px"
 			borderColor="border"
 			borderRadius="sm"
-			lineHeight="1.75"
+			lineHeight="tall"
 		>
 			{
 				sentenceParsed.map((i, index) => {

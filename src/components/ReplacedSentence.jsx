@@ -57,7 +57,7 @@ export const ReplacedSentence = () => {
 							<Text
 								as="span"
 								color={i.data.map(i => i.type).includes('replacement') ? 'green.500' : null}
-								bg={i.data.map(i => i.type).includes('keyword') ? 'yellow.solid' : null}
+								bg={i.data.map(i => i.type).includes('keyword') ? 'yellow.emphasized' : null}
 							>
 								{i.content}
 							</Text>

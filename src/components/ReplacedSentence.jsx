@@ -1,5 +1,6 @@
 import { Tooltip } from "@/components/ui/tooltip"
-import { Box, Text } from '@chakra-ui/react'
+import { Box, HStack, Text } from '@chakra-ui/react'
+import { HiArrowRight } from 'react-icons/hi2'
 import { useKeywords } from '../atoms/keywords'
 import { useReplacements } from '../atoms/replacements'
 import { useOriginalSentence } from '../atoms/sentence'
@@ -35,7 +36,13 @@ export const ReplacedSentence = () => {
 									.map((i, index) => {
 										switch (i.type) {
 											case 'replacement':
-												return <Text key={index}>{`${i.from} → ${i.to}`}</Text>
+												return (
+													<HStack key={index} gap="1">
+														<Text>{i.from}</Text>
+														<HiArrowRight></HiArrowRight>
+														<Text>{i.to}</Text>
+													</HStack>
+												)
 											case 'keyword':
 												return <Text key={index}>{`キーワード: ${i.keyword}`}</Text>
 											default:

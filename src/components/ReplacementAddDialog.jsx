@@ -25,11 +25,12 @@ import { Button, createListCollection, FieldLabel, FieldRoot, HStack, Input, VSt
 import { useRef, useState } from 'react'
 import { usePlayers } from '../atoms/players'
 import { useReplacements } from '../atoms/replacements'
+import { jobs } from '../utils/jobs'
 
 export const ReplacementAddDialog = ({ children }) => {
 	const [open, setOpen] = useState(false)
 	const contentRef = useRef(null)
-	const [players] = usePlayers()
+	const [players, { editPlayer }] = usePlayers()
 	const [replacements, { addReplacement }] = useReplacements()
 	const playersCollection = createListCollection({
 		items: Object.values(players).map(job => {
@@ -47,7 +48,13 @@ export const ReplacementAddDialog = ({ children }) => {
 		return player && rollValue && replaceBefore && replaceAfter
 	}
 	const onSubmit = () => {
-		addReplacement({ from: replaceBefore, to: replaceAfter })
+		const playerData = players[player]
+		if (rollValue !== playerData.rollValue || jobs[playerData.jobId].ignoreFailed) {
+			addReplacement({ from: replaceBefore, to: replaceAfter })
+		}
+		if (rollValue !== playerData.rollValue) {
+			editPlayer(player, { hp: playerData.hp - 1 })
+		}
 		setOpen(false)
 		setRollValue(null)
 		setReplaceBefore('')

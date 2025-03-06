@@ -39,7 +39,7 @@ export const ReplacementAddDialog = ({ children }) => {
 			}
 		})
 	})
-	const [player, setPlayer] = useState(Object.values(players)[0].uuid)
+	const [player, setPlayer] = useState([playersCollection.items[0].value])
 	const [rollValue, setRollValue] = useState(null)
 	const [replaceBefore, setReplaceBefore] = useState('')
 	const [replaceAfter, setReplaceAfter] = useState('')
@@ -69,6 +69,7 @@ export const ReplacementAddDialog = ({ children }) => {
 							collection={playersCollection}
 							size="sm"
 							defaultOpen
+							defaultValue={null}
 							value={player}
 							onValueChange={e => setPlayer(e.value)}
 						>

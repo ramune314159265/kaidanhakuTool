@@ -9,6 +9,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog"
+import { Field as SimpleField } from "@/components/ui/field"
 import {
 	NumberInputField,
 	NumberInputRoot
@@ -16,13 +17,13 @@ import {
 import {
 	SelectContent,
 	SelectItem,
-	SelectLabel,
 	SelectRoot,
 	SelectTrigger,
-	SelectValueText,
+	SelectValueText
 } from "@/components/ui/select"
 import { AlertContent, AlertDescription, AlertIndicator, AlertRoot, AlertTitle, Button, createListCollection, FieldLabel, FieldRoot, HStack, Input, VStack } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { usePlayers } from '../atoms/players'
 import { useReplacements } from '../atoms/replacements'
 import { jobs } from '../utils/jobs'
@@ -40,25 +41,30 @@ export const ReplacementAddDialog = ({ children }) => {
 			}
 		})
 	})
-	const [player, setPlayer] = useState([playersCollection.items[0].value])
-	const [rollValue, setRollValue] = useState(null)
-	const [replaceBefore, setReplaceBefore] = useState('')
-	const [replaceAfter, setReplaceAfter] = useState('')
-	const validate = () => {
-		return player && rollValue && replaceBefore && replaceAfter
-	}
-	const onSubmit = () => {
-		const playerData = players[player]
-		if (rollValue !== playerData.rollValue || jobs[playerData.jobId].ignoreFailed) {
-			addReplacement({ from: replaceBefore, to: replaceAfter })
+	const {
+		register,
+		handleSubmit,
+		watch,
+		reset,
+		formState: {
+			errors
+		},
+		control
+	} = useForm({
+		defaultValues: {
+			player: [playersCollection.items[0].value]
 		}
-		if (rollValue !== playerData.rollValue) {
-			editPlayer(player, { hp: playerData.hp - 1 })
+	})
+	const onSubmit = data => {
+		const playerData = players[data.player]
+		if (data.rollValue !== playerData.rollValue || jobs[playerData.jobId].ignoreFailed) {
+			addReplacement({ from: data.replaceBefore, to: data.replaceAfter })
+		}
+		if (data.rollValue === playerData.rollValue) {
+			editPlayer(data.player, { hp: playerData.hp - 1 })
 		}
 		setOpen(false)
-		setRollValue(null)
-		setReplaceBefore('')
-		setReplaceAfter('')
+		reset()
 	}
 	return (
 		<DialogRoot open={open} lazyMount onOpenChange={e => setOpen(e.open)}>
@@ -66,77 +72,107 @@ export const ReplacementAddDialog = ({ children }) => {
 				{children}
 			</DialogTrigger>
 			<DialogContent ref={contentRef}>
-				<DialogHeader>
-					<DialogTitle>置き換えを追加</DialogTitle>
-				</DialogHeader>
-				<DialogBody>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<DialogHeader>
+						<DialogTitle>置き換えを追加</DialogTitle>
+					</DialogHeader>
+					<DialogBody>
 
-					<VStack gap="4">
-						<SelectRoot
-							collection={playersCollection}
-							size="sm"
-							defaultOpen
-							defaultValue={null}
-							value={player}
-							onValueChange={e => setPlayer(e.value)}
-						>
-							<SelectLabel>プレイヤー</SelectLabel>
-							<SelectTrigger>
-								<SelectValueText placeholder="プレイヤーを選択" />
-							</SelectTrigger>
-							<SelectContent portalRef={contentRef}>
-								{playersCollection.items.map((p) => (
-									<SelectItem item={p.value} key={p.value}>
-										{p.label}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</SelectRoot>
-
-						<FieldRoot>
-							<FieldLabel>ダイス出目</FieldLabel>
-							<NumberInputRoot
-								size="sm"
-								min={1}
-								max={6}
-								allowOverflow={false}
-								value={rollValue}
-								onValueChange={e => setRollValue(e.value)}
+						<VStack gap="4">
+							<SimpleField
+								label="プレイヤー"
+								invalid={!!errors.player}
+								errorText={errors.player?.message}
 							>
-								<NumberInputField></NumberInputField>
-							</NumberInputRoot>
-						</FieldRoot>
+								<Controller
+									control={control}
+									name="player"
+									render={({ field }) => (
+										<SelectRoot
+											name={field.name}
+											value={field.value}
+											onValueChange={({ value }) => field.onChange(value)}
+											onInteractOutside={() => field.onBlur()}
+											collection={playersCollection}
+											size="sm"
+											defaultOpen
+										>
+											<SelectTrigger>
+												<SelectValueText placeholder="プレイヤーを選択" />
+											</SelectTrigger>
+											<SelectContent portalRef={contentRef}>
+												{playersCollection.items.map((p) => (
+													<SelectItem item={p.value} key={p.value}>
+														{p.label}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</SelectRoot>
+									)}
+								/>
+							</SimpleField>
 
-						<HStack w="full">
-							<FieldRoot>
-								<FieldLabel>置き換え前</FieldLabel>
-								<Input size="sm" value={replaceBefore} onChange={e => setReplaceBefore(e.target.value)}></Input>
-							</FieldRoot>
+							<SimpleField
+								label="ダイス出目"
+								invalid={!!errors.rollValue}
+								errorText={errors.rollValue?.message}
+							>
+								<Controller
+									name="rollValue"
+									control={control}
+									render={({ field }) => (
+										<NumberInputRoot
+											disabled={field.disabled}
+											name={field.name}
+											value={field.value}
+											onValueChange={({ value }) => {
+												field.onChange(value)
+											}}
+											min={1}
+											max={6}
+											allowOverflow={false}
+										>
+											<NumberInputField onBlur={field.onBlur} />
+										</NumberInputRoot>
+									)}
+								/>
+							</SimpleField>
 
-							<FieldRoot>
-								<FieldLabel>置き換え後</FieldLabel>
-								<Input size="sm" value={replaceAfter} onChange={e => setReplaceAfter(e.target.value)}></Input>
-							</FieldRoot>
-						</HStack>
+							<HStack w="full">
+								<FieldRoot>
+									<FieldLabel>置き換え前</FieldLabel>
+									<Input size="sm" {...register('replaceBefore', {
+										required: '入力必須です'
+									})}></Input>
+								</FieldRoot>
 
-						<AlertRoot>
-							<AlertIndicator></AlertIndicator>
-							<AlertContent>
-								<AlertTitle>{players[player].name}の役職({jobs[players[player].jobId].name})の効果</AlertTitle>
-								<AlertDescription>{jobs[players[player].jobId].description}</AlertDescription>
-							</AlertContent>
-						</AlertRoot>
-					</VStack>
+								<FieldRoot>
+									<FieldLabel>置き換え後</FieldLabel>
+									<Input size="sm" {...register('replaceAfter', {
+										required: '入力必須です'
+									})}></Input>
+								</FieldRoot>
+							</HStack>
 
-				</DialogBody>
-				<DialogFooter>
-					<DialogActionTrigger asChild>
-						<Button variant="outline">キャンセル</Button>
-					</DialogActionTrigger>
-					<Button disabled={(() => !validate())()} onClick={() => onSubmit()}>置き換える</Button>
-				</DialogFooter>
-				<DialogCloseTrigger />
+							<AlertRoot>
+								<AlertIndicator></AlertIndicator>
+								<AlertContent>
+									<AlertTitle>{players[watch('player')].name}の役職({jobs[players[watch('player')].jobId].name})の効果</AlertTitle>
+									<AlertDescription>{jobs[players[watch('player')].jobId].description}</AlertDescription>
+								</AlertContent>
+							</AlertRoot>
+						</VStack>
+
+					</DialogBody>
+					<DialogFooter>
+						<DialogActionTrigger asChild>
+							<Button variant="outline">キャンセル</Button>
+						</DialogActionTrigger>
+						<Button type="submit">置き換える</Button>
+					</DialogFooter>
+					<DialogCloseTrigger />
+				</form >
 			</DialogContent>
-		</DialogRoot>
+		</DialogRoot >
 	)
 }

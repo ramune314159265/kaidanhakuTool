@@ -8,7 +8,8 @@ export const ReplacementList = () => {
 	const [replacements] = useReplacements()
 	return (
 		<VStack>
-			<Grid w="full" gap="2" templateColumns="1fr 1fr">
+			<Grid w="full" gap="2" templateColumns="1fr 2fr 2fr">
+				<Text fontSize="xs">プレイヤー名</Text>
 				<Text fontSize="xs">前</Text>
 				<Text fontSize="xs">後</Text>
 			</Grid>

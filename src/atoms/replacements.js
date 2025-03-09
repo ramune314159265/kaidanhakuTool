@@ -13,10 +13,10 @@ export const useReplacements = () => {
 		localStorage.setItem('ramune314159265.kaidanhakuTool.replacements', JSON.stringify(replacements))
 	}, [replacements])
 
-	const addReplacement = ({ from, to }) => {
+	const addReplacement = ({ from, to, playerId }) => {
 		setReplacements([
 			...replacements,
-			{ from, to }
+			{ from, to, playerId }
 		])
 	}
 

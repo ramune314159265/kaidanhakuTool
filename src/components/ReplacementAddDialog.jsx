@@ -58,9 +58,9 @@ export const ReplacementAddDialog = ({ children }) => {
 		}
 	})
 	const onSubmit = data => {
-		const playerData = players[data.player]
+		const playerData = players[data.player[0]]
 		if (data.rollValue !== playerData.rollValue || jobs[playerData.jobId].ignoreFailed) {
-			addReplacement({ from: data.replaceBefore, to: data.replaceAfter })
+			addReplacement({ from: data.replaceBefore, to: data.replaceAfter, playerId: data.player[0] })
 		}
 		if (data.rollValue === playerData.rollValue) {
 			editPlayer(data.player, { hp: playerData.hp - 1 })

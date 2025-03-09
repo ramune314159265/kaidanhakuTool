@@ -2,6 +2,7 @@ import { Tooltip } from "@/components/ui/tooltip"
 import { Box, HStack, Text } from '@chakra-ui/react'
 import { HiArrowRight } from 'react-icons/hi2'
 import { useKeywords } from '../atoms/keywords'
+import { usePlayers } from '../atoms/players'
 import { useReplacements } from '../atoms/replacements'
 import { useOriginalSentence } from '../atoms/sentence'
 import { parseSentence } from '../utils/parser'
@@ -10,6 +11,7 @@ export const ReplacedSentence = () => {
 	const [originalSentence] = useOriginalSentence()
 	const [replacements] = useReplacements()
 	const [keywords] = useKeywords()
+	const [players] = usePlayers()
 	const sentenceParsed = parseSentence(originalSentence, { replacements, keywords })
 	return (
 		<Box
@@ -32,23 +34,23 @@ export const ReplacedSentence = () => {
 						<Tooltip
 							key={index}
 							content={
-								i.data
-									.map((i, index) => {
-										switch (i.type) {
-											case 'replacement':
-												return (
-													<HStack key={index} gap="1">
-														<Text>{i.from}</Text>
-														<HiArrowRight></HiArrowRight>
-														<Text>{i.to}</Text>
-													</HStack>
-												)
-											case 'keyword':
-												return <Text key={index}>{`キーワード: ${i.keyword}`}</Text>
-											default:
-												return ''
-										}
-									})
+								i.data.map((i, index) => {
+									switch (i.type) {
+										case 'replacement':
+											return (
+												<HStack key={index} gap="1">
+													<Text>{players[i.playerId].name}: </Text>
+													<Text>{i.from}</Text>
+													<HiArrowRight></HiArrowRight>
+													<Text>{i.to}</Text>
+												</HStack>
+											)
+										case 'keyword':
+											return <Text key={index}>{`キーワード: ${i.keyword}`}</Text>
+										default:
+											return ''
+									}
+								})
 							}
 							showArrow
 							openDelay="0"

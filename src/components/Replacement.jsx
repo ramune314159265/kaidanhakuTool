@@ -1,14 +1,20 @@
-import { Grid, Input } from '@chakra-ui/react'
+import { Grid, Input, Text } from '@chakra-ui/react'
+import { usePlayers } from '../atoms/players'
 import { useReplacements } from '../atoms/replacements'
 
 export const Replacement = ({ index }) => {
 	const [replacements, { editReplacement }] = useReplacements()
+	const [players] = usePlayers()
 	return (
-		<Grid w="full" gap="2" templateColumns="1fr 1fr">
+		<Grid w="full" gap="2" templateColumns="1fr 2fr 2fr" alignItems="center">
+			<Text
+				fontSize="sm"
+				truncate
+				verticalAlign="middle"
+			>{players[replacements[index].playerId].name}</Text>
 			<Input
 				w="full"
 				aria-label="前"
-				className="peer"
 				placeholder=""
 				size="xs"
 				value={replacements[index].from}
@@ -17,7 +23,6 @@ export const Replacement = ({ index }) => {
 			<Input
 				w="full"
 				aria-label="後"
-				className="peer"
 				placeholder=""
 				size="xs"
 				value={replacements[index].to}

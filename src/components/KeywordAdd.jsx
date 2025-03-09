@@ -1,3 +1,4 @@
+import { Tooltip } from "@/components/ui/tooltip"
 import { Input, TagEndElement, TagLabel, TagRoot } from '@chakra-ui/react'
 import { useState } from 'react'
 import { HiMiniPlus } from 'react-icons/hi2'
@@ -35,18 +36,23 @@ export const KeywordAdd = () => {
 	return (
 		<TagRoot size="xl" variant="solid" w="32">
 			<TagLabel w="full">
-				<Input
-					size="sm"
-					border="none"
-					p="0"
-					placeholder="キーワード追加"
-					onChange={e => setKeyword(e.target.value)}
-					value={keyword}
-					onKeyDown={e => {
-						if (e.key === 'Enter') onSubmit()
-					}}
-					onPaste={e => onPaste(e)}
-				></Input>
+				<Tooltip
+					content="エンターで追加、キーワード一覧の貼り付けで複数追加"
+					showArrow
+				>
+					<Input
+						size="sm"
+						border="none"
+						p="0"
+						placeholder="キーワード追加"
+						onChange={e => setKeyword(e.target.value)}
+						value={keyword}
+						onKeyDown={e => {
+							if (e.key === 'Enter') onSubmit()
+						}}
+						onPaste={e => onPaste(e)}
+					></Input>
+				</Tooltip>
 			</TagLabel>
 			<TagEndElement onClick={() => onSubmit()}>
 				<HiMiniPlus></HiMiniPlus>

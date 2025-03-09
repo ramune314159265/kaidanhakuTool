@@ -45,6 +45,8 @@ export const ReplacementAddDialog = ({ children }) => {
 		register,
 		handleSubmit,
 		watch,
+		getValues,
+		setValue,
 		reset,
 		formState: {
 			errors
@@ -141,9 +143,23 @@ export const ReplacementAddDialog = ({ children }) => {
 							<HStack w="full">
 								<FieldRoot>
 									<FieldLabel>置き換え前</FieldLabel>
-									<Input size="sm" {...register('replaceBefore', {
-										required: '入力必須です'
-									})}></Input>
+									<Input
+										size="sm"
+										{...register('replaceBefore', {
+											required: '入力必須です'
+										})}
+										onPaste={e => {
+											if (getValues().replaceBefore || getValues().replaceAfter) {
+												return
+											}
+											e.preventDefault()
+											const text = e.clipboardData.getData('text').trim()
+											const splitterRegExp = new RegExp('(\\n|→|=|　)')
+											const [first, , ...after] = text.split(splitterRegExp).filter(s => s !== '')
+											setValue('replaceBefore', first.trim())
+											setValue('replaceAfter', after.join('').trim())
+										}}
+									></Input>
 								</FieldRoot>
 
 								<FieldRoot>

@@ -1,27 +1,21 @@
 import { EditableInput, EditablePreview, EditableRoot, TagLabel, TagRoot } from '@chakra-ui/react'
-import { useState } from 'react'
 import { useKeywords } from '../atoms/keywords'
 
 export const Keyword = ({ index }) => {
 	const [keywords, { editKeyword, deleteKeyword }] = useKeywords()
-	const [keyword, setKeyword] = useState(keywords[index])
-	const onSubmit = () => {
-		console.log(keyword)
-		if (!keyword) {
+	const onSubmit = value => {
+		if (!value) {
 			deleteKeyword(index)
 			return
 		}
-		editKeyword(index, keyword)
+		editKeyword(index, value)
 	}
 	return (
 		<TagRoot size="xl">
 			<TagLabel>
 				<EditableRoot
-					value={keyword}
-					onValueChange={e => setKeyword(e.value)}
-					onKeyDown={e => {
-						if (e.key === 'Enter') onSubmit()
-					}}
+					defaultValue={keywords[index]}
+					onValueCommit={(e) => onSubmit(e.value)}
 				>
 					<EditablePreview></EditablePreview>
 					<EditableInput></EditableInput>

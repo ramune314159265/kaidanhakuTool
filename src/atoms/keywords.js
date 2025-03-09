@@ -6,6 +6,7 @@ export const useKeywords = () => {
 	const [keywords, setKeywords] = useAtom(keywordsAtom)
 
 	const addKeyword = ({ word }) => {
+		console.log(word)
 		setKeywords([
 			...keywords,
 			word

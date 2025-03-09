@@ -54,7 +54,7 @@ export const ReplacementAddDialog = ({ children }) => {
 		control
 	} = useForm({
 		defaultValues: {
-			player: [playersCollection.items[0].value]
+			player: [playersCollection.items[0]?.value]
 		}
 	})
 	const onSubmit = data => {
@@ -170,13 +170,17 @@ export const ReplacementAddDialog = ({ children }) => {
 								</FieldRoot>
 							</HStack>
 
-							<AlertRoot>
-								<AlertIndicator></AlertIndicator>
-								<AlertContent>
-									<AlertTitle>{players[watch('player')].name}の役職({jobs[players[watch('player')].jobId].name})の効果</AlertTitle>
-									<AlertDescription>{jobs[players[watch('player')].jobId].description}</AlertDescription>
-								</AlertContent>
-							</AlertRoot>
+							{
+								watch('player')[0]
+									? <AlertRoot>
+										<AlertIndicator></AlertIndicator>
+										<AlertContent>
+											<AlertTitle>{players[watch('player')].name}の役職({jobs[players[watch('player')].jobId].name})の効果</AlertTitle>
+											<AlertDescription>{jobs[players[watch('player')].jobId].description}</AlertDescription>
+										</AlertContent>
+									</AlertRoot>
+									: <></>
+							}
 						</VStack>
 
 					</DialogBody>

@@ -1,9 +1,17 @@
 import { atom, useAtom } from 'jotai'
+import { useEffect } from 'react'
 
-export const keywordsAtom = atom(['弱虫', '飛び降り'])
+export const keywordsAtom = atom(localStorage.getItem('ramune314159265.kaidanhakuTool.keywords') === null ?
+	[] :
+	JSON.parse(localStorage.getItem('ramune314159265.kaidanhakuTool.keywords'))
+)
 
 export const useKeywords = () => {
 	const [keywords, setKeywords] = useAtom(keywordsAtom)
+
+	useEffect(() => {
+		localStorage.setItem('ramune314159265.kaidanhakuTool.keywords', JSON.stringify(keywords))
+	}, [keywords])
 
 	const addKeyword = ({ word }) => {
 		console.log(word)

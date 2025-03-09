@@ -1,25 +1,18 @@
 import { atom, useAtom } from 'jotai'
+import { useEffect } from 'react'
 import { jobs } from '../utils/jobs'
 
-export const playersAtom = atom({
-	'test': {
-		uuid: 'test',
-		name: 'ああああああ',
-		jobId: 'playwright',
-		rollValue: 1,
-		hp: 1
-	},
-	'test2': {
-		uuid: 'test2',
-		name: 'いいいいいいいいい',
-		jobId: 'editor',
-		rollValue: 2,
-		hp: 4
-	}
-})
+export const playersAtom = atom(localStorage.getItem('ramune314159265.kaidanhakuTool.players') === null ?
+	[] :
+	JSON.parse(localStorage.getItem('ramune314159265.kaidanhakuTool.players'))
+)
 
 export const usePlayers = () => {
 	const [players, setPlayers] = useAtom(playersAtom)
+
+	useEffect(() => {
+		localStorage.setItem('ramune314159265.kaidanhakuTool.players', JSON.stringify(players))
+	}, [players])
 
 	const addPlayer = ({ uuid, name, jobId, rollValue }) => {
 		setPlayers({

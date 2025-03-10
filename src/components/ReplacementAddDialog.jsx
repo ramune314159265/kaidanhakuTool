@@ -69,7 +69,7 @@ export const ReplacementAddDialog = ({ children }) => {
 		reset()
 	}
 	return (
-		<DialogRoot open={open} lazyMount onOpenChange={e => setOpen(e.open)}>
+		<DialogRoot open={open} lazyMount onOpenChange={e => setOpen(e.open)} closeOnInteractOutside={false}>
 			<DialogTrigger asChild>
 				{children}
 			</DialogTrigger>
@@ -154,7 +154,7 @@ export const ReplacementAddDialog = ({ children }) => {
 											}
 											e.preventDefault()
 											const text = e.clipboardData.getData('text').trim()
-											const splitterRegExp = new RegExp('(\\n|→|=|　)')
+											const splitterRegExp = new RegExp('(\\n|→|=|　|＝)')
 											const [first, , ...after] = text.split(splitterRegExp).filter(s => s !== '')
 											setValue('replaceBefore', first.trim())
 											setValue('replaceAfter', after.join('').trim())

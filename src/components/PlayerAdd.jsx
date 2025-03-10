@@ -68,11 +68,11 @@ export const PlayerAdd = () => {
 				<NumberInputField></NumberInputField>
 			</NumberInputRoot>
 
-			<Tooltip content="追加" showArrow>
+			<Tooltip content="プレイヤーを追加" showArrow>
 				<IconButton
 					size="xs"
 					w="full"
-					aria-label="追加"
+					aria-label="プレイヤーを追加"
 					onClick={() => {
 						addPlayer({
 							uuid: crypto.randomUUID(),

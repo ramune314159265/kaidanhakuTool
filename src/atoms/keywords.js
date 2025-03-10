@@ -14,7 +14,6 @@ export const useKeywords = () => {
 	}, [keywords])
 
 	const addKeyword = ({ word }) => {
-		console.log(word)
 		setKeywords([
 			...keywords,
 			word

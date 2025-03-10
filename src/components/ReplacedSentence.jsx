@@ -1,3 +1,4 @@
+import { ClipboardIconButton, ClipboardRoot } from "@/components/ui/clipboard"
 import {
 	PaginationNextTrigger,
 	PaginationPageText,
@@ -5,7 +6,7 @@ import {
 	PaginationRoot
 } from "@/components/ui/pagination"
 import { Tooltip } from "@/components/ui/tooltip"
-import { Box, Center, HStack, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react'
 import { HiArrowRight } from 'react-icons/hi2'
 import { useKeywords } from '../atoms/keywords'
 import { usePlayers } from '../atoms/players'
@@ -26,7 +27,7 @@ export const ReplacedSentence = () => {
 
 	const sentenceParsed = parseSentence(sentenceSplitted[sectionRegulated], { replacements, keywords })
 	return (
-		<SimpleGrid templateRows="1fr 36px" h="full" gap="2">
+		<SimpleGrid templateRows="1fr 36px" h="full" gap="2" position="relative">
 			<Box
 				paddingInline="3"
 				paddingBlock="2"
@@ -81,22 +82,24 @@ export const ReplacedSentence = () => {
 					})
 				}
 			</Box>
-			<PaginationRoot
-				w="full"
-				variant="solid"
-				count={sentenceSplitted.length}
-				pageSize={1}
-				page={sectionRegulated + 1}
-				onPageChange={e => setSection(e.page - 1)}
-			>
-				<Center>
+			<HStack w="full" justifyContent="center" gap="4">
+				<PaginationRoot
+					variant="solid"
+					count={sentenceSplitted.length}
+					pageSize={1}
+					page={sectionRegulated + 1}
+					onPageChange={e => setSection(e.page - 1)}
+				>
 					<HStack>
 						<PaginationPrevTrigger />
 						<PaginationPageText format="short" />
 						<PaginationNextTrigger />
 					</HStack>
-				</Center>
-			</PaginationRoot>
+				</PaginationRoot>
+				<ClipboardRoot value={sentenceParsed.map(i => i.content).join('')}>
+					<ClipboardIconButton size="sm" />
+				</ClipboardRoot>
+			</HStack>
 		</SimpleGrid>
 	)
 }

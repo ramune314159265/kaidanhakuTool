@@ -21,7 +21,7 @@ import {
 	SelectTrigger,
 	SelectValueText
 } from "@/components/ui/select"
-import { AlertContent, AlertDescription, AlertIndicator, AlertRoot, AlertTitle, Button, createListCollection, FieldLabel, FieldRoot, HStack, Input, VStack } from '@chakra-ui/react'
+import { AlertContent, AlertDescription, AlertIndicator, AlertRoot, AlertTitle, Button, createListCollection, FieldLabel, FieldRoot, HStack, Input, Text, VStack } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { usePlayers } from '../atoms/players'
@@ -34,10 +34,11 @@ export const ReplacementAddDialog = ({ children }) => {
 	const [players, { editPlayer }] = usePlayers()
 	const [replacements, { addReplacement }] = useReplacements()
 	const playersCollection = createListCollection({
-		items: Object.values(players).map(job => {
+		items: Object.values(players).map(player => {
 			return {
-				label: job.name,
-				value: job.uuid
+				label: player.hp <= 0 ? `${player.name} (ゲームオーバー)` : player.name,
+				value: player.uuid,
+				isDead: player.hp <= 0
 			}
 		})
 	})
@@ -105,7 +106,7 @@ export const ReplacementAddDialog = ({ children }) => {
 											<SelectContent portalRef={contentRef}>
 												{playersCollection.items.map((p) => (
 													<SelectItem item={p.value} key={p.value}>
-														{p.label}
+														<Text color={p.isDead ? 'fg.muted' : null}>{p.label}</Text>
 													</SelectItem>
 												))}
 											</SelectContent>

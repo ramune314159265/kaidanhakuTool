@@ -6,7 +6,8 @@ import {
 	PaginationRoot
 } from "@/components/ui/pagination"
 import { Tooltip } from "@/components/ui/tooltip"
-import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, HStack, SimpleGrid, SwitchControl, SwitchHiddenInput, SwitchLabel, SwitchRoot, SwitchThumb, Text } from '@chakra-ui/react'
+import { useState } from 'react'
 import { HiArrowRight } from 'react-icons/hi2'
 import { useKeywords } from '../atoms/keywords'
 import { usePlayers } from '../atoms/players'
@@ -22,10 +23,12 @@ export const ReplacedSentence = () => {
 	const [players] = usePlayers()
 	const [section, { setSection }] = useSection()
 
+	const [isShowFull, setIsShowFull] = useState(false)
 	const sentenceSplitted = originalSentence.split(/\n{2,}/)
 	const sectionRegulated = Math.min(section, sentenceSplitted.length)
+	const sentenceToShow = isShowFull ? originalSentence : sentenceSplitted[sectionRegulated]
 
-	const sentenceParsed = parseSentence(sentenceSplitted[sectionRegulated], { replacements, keywords })
+	const sentenceParsed = parseSentence(sentenceToShow, { replacements, keywords })
 	return (
 		<SimpleGrid templateRows="1fr 36px" h="full" gap="2" position="relative">
 			<Box
@@ -38,6 +41,7 @@ export const ReplacedSentence = () => {
 				borderColor="border"
 				borderRadius="sm"
 				lineHeight="tall"
+				whiteSpace="pre-line"
 			>
 				{
 					sentenceParsed.map((i, index) => {
@@ -99,6 +103,13 @@ export const ReplacedSentence = () => {
 				<ClipboardRoot value={sentenceParsed.map(i => i.content).join('')}>
 					<ClipboardIconButton size="sm" />
 				</ClipboardRoot>
+				<SwitchRoot checked={isShowFull} onCheckedChange={e => setIsShowFull(e.checked)}>
+					<SwitchHiddenInput></SwitchHiddenInput>
+					<SwitchControl>
+						<SwitchThumb></SwitchThumb>
+					</SwitchControl>
+					<SwitchLabel>全文</SwitchLabel>
+				</SwitchRoot>
 			</HStack>
 		</SimpleGrid>
 	)

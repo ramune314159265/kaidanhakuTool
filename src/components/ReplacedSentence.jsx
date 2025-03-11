@@ -95,9 +95,9 @@ export const ReplacedSentence = () => {
 					onPageChange={e => setSection(e.page - 1)}
 				>
 					<HStack>
-						<PaginationPrevTrigger />
+						<PaginationPrevTrigger disabled={isShowFull} />
 						<PaginationPageText format="short" />
-						<PaginationNextTrigger />
+						<PaginationNextTrigger disabled={isShowFull} />
 					</HStack>
 				</PaginationRoot>
 				<ClipboardRoot value={sentenceParsed.map(i => i.content).join('')}>

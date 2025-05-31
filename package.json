@@ -17,7 +17,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "vite-plugin-open-graph": "^2.0.6",
+    "vite-plugin-pwa": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

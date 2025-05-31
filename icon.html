@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=512, height=512, initial-scale=1.0">
+	<title>icon</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		.letter {
+			color: darkred;
+			display: flex;
+			width: 100%;
+			height: 100%;
+			font-family: "07ReallyScaryMinchotai";
+			align-items: center;
+			justify-content: center;
+			font-size: 25rem;
+		}
+	</style>
+</head>
+
+<body style="width: 512px; height: 512px; position: relative; background: transparent;">
+	<div class="letter">
+		怪
+	</div>
+	<script type="module">
+		import domToImage from 'https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/+esm'
+
+		document.body.addEventListener('click', async () => {
+			const newWindow = window.open("about:blank", Math.random())
+			const url = await domToImage.toPng(document.body)
+			const imageElement = newWindow.document.createElement('img')
+			imageElement.src = url
+			imageElement.style.display = 'block'
+			newWindow.document.body.appendChild(imageElement)
+		})
+	</script>
+</body>
+
+</html>

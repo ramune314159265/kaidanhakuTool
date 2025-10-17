@@ -3,7 +3,7 @@ import { useKeywords } from '../atoms/keywords'
 import { Keyword } from './Keyword'
 import { KeywordAdd } from './KeywordAdd'
 
-export const KeywordList = () => {
+export const KeywordListPanel = () => {
 	const [keywords] = useKeywords()
 	return (
 		<HStack flexWrap="wrap">

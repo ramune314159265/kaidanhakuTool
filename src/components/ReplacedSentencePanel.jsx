@@ -16,7 +16,7 @@ import { useSection } from '../atoms/section'
 import { useOriginalSentence } from '../atoms/sentence'
 import { parseSentence } from '../utils/parser'
 
-export const ReplacedSentence = () => {
+export const ReplacedSentencePanel = () => {
 	const [originalSentence] = useOriginalSentence()
 	const [replacements] = useReplacements()
 	const [keywords] = useKeywords()

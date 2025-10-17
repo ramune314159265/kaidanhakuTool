@@ -6,7 +6,7 @@ import { useReplacements } from '../atoms/replacements'
 import { Replacement } from './Replacement'
 import { ReplacementAddDialog } from './ReplacementAddDialog'
 
-export const ReplacementList = () => {
+export const ReplacementListPanel = () => {
 	const [players] = usePlayers()
 	const [replacements] = useReplacements()
 	return (

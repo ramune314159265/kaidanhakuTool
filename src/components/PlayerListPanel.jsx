@@ -5,7 +5,7 @@ import { jobs } from '../utils/jobs'
 import { Player } from './Player'
 import { PlayerAdd } from './PlayerAdd'
 
-export const PlayerList = () => {
+export const PlayerListPanel = () => {
 	const [players] = usePlayers()
 	return (
 		<VStack position="relative">

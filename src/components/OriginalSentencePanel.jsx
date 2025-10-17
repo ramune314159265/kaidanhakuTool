@@ -1,7 +1,7 @@
 import { Textarea } from '@chakra-ui/react'
 import { useOriginalSentence } from '../atoms/sentence'
 
-export const OriginalSentence = () => {
+export const OriginalSentencePanel = () => {
 	const [originalSentence, { setOriginalSentence }] = useOriginalSentence()
 	return (
 		<Textarea

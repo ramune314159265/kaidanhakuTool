@@ -6,7 +6,7 @@ import {
 	PaginationRoot
 } from "@/components/ui/pagination"
 import { Tooltip } from "@/components/ui/tooltip"
-import { Box, HStack, SimpleGrid, SwitchControl, SwitchHiddenInput, SwitchLabel, SwitchRoot, SwitchThumb, Text } from '@chakra-ui/react'
+import { Box, HStack, SimpleGrid, SwitchControl, SwitchHiddenInput, SwitchLabel, SwitchRoot, SwitchThumb, Text, Theme } from '@chakra-ui/react'
 import { useState } from 'react'
 import { HiArrowRight } from 'react-icons/hi2'
 import { useKeywords } from '../atoms/keywords'
@@ -30,87 +30,89 @@ export const ReplacedSentencePanel = () => {
 
 	const sentenceParsed = parseSentence(sentenceToShow, { replacements, keywords })
 	return (
-		<SimpleGrid templateRows="1fr 36px" h="full" gap="2" position="relative">
-			<Box
-				paddingInline="3"
-				paddingBlock="2"
-				h="full"
-				fontSize="md"
-				overflowY="auto"
-				borderWidth="1px"
-				borderColor="border"
-				borderRadius="sm"
-				lineHeight="tall"
-				whiteSpace="pre-line"
-			>
-				{
-					sentenceParsed.map((i, index) => {
-						if (i.data.length === 0) {
-							return i.content
-						}
-						return (
-							<Tooltip
-								key={index}
-								content={
-									i.data.map((i, index) => {
-										switch (i.type) {
-											case 'replacement':
-												return (
-													<HStack key={index} gap="1">
-														<Text>{players[i.playerId].name}: </Text>
-														<Text>{i.from}</Text>
-														<HiArrowRight></HiArrowRight>
-														<Text>{i.to}</Text>
-													</HStack>
-												)
-											case 'keyword':
-												return <Text key={index}>{`キーワード: ${i.keyword}`}</Text>
-											default:
-												return ''
-										}
-									})
-								}
-								showArrow
-								openDelay="0"
-								closeDelay="0"
-							>
-								<Text
-									as="span"
-									color={i.data.map(i => i.type).includes('replacement') ? 'green.500' : null}
-									bg={i.data.map(i => i.type).includes('keyword') ? 'yellow.emphasized' : null}
-								>
-									{i.content}
-								</Text>
-							</Tooltip>
-						)
-					})
-				}
-			</Box>
-			<HStack w="full" justifyContent="center" gap="4">
-				<PaginationRoot
-					variant="solid"
-					count={sentenceSplitted.length}
-					pageSize={1}
-					page={sectionRegulated + 1}
-					onPageChange={e => setSection(e.page - 1)}
+		<Theme appearance="dark" h="full">
+			<SimpleGrid templateRows="1fr 44px" h="full" position="relative">
+				<Box
+					paddingInline="3"
+					paddingBlock="2"
+					h="full"
+					fontSize="md"
+					overflowY="auto"
+					borderWidth="1px"
+					borderColor="border"
+					borderRadius="sm"
+					lineHeight="tall"
+					whiteSpace="pre-line"
 				>
-					<HStack>
-						<PaginationPrevTrigger disabled={isShowFull} />
-						<PaginationPageText format="short" />
-						<PaginationNextTrigger disabled={isShowFull} />
-					</HStack>
-				</PaginationRoot>
-				<ClipboardRoot value={sentenceParsed.map(i => i.content).join('')}>
-					<ClipboardIconButton size="sm" />
-				</ClipboardRoot>
-				<SwitchRoot checked={isShowFull} onCheckedChange={e => setIsShowFull(e.checked)}>
-					<SwitchHiddenInput></SwitchHiddenInput>
-					<SwitchControl>
-						<SwitchThumb></SwitchThumb>
-					</SwitchControl>
-					<SwitchLabel>全文</SwitchLabel>
-				</SwitchRoot>
-			</HStack>
-		</SimpleGrid>
+					{
+						sentenceParsed.map((i, index) => {
+							if (i.data.length === 0) {
+								return i.content
+							}
+							return (
+								<Tooltip
+									key={index}
+									content={
+										i.data.map((i, index) => {
+											switch (i.type) {
+												case 'replacement':
+													return (
+														<HStack key={index} gap="1">
+															<Text>{players[i.playerId].name}: </Text>
+															<Text>{i.from}</Text>
+															<HiArrowRight></HiArrowRight>
+															<Text>{i.to}</Text>
+														</HStack>
+													)
+												case 'keyword':
+													return <Text key={index}>{`キーワード: ${i.keyword}`}</Text>
+												default:
+													return ''
+											}
+										})
+									}
+									showArrow
+									openDelay="0"
+									closeDelay="0"
+								>
+									<Text
+										as="span"
+										color={i.data.map(i => i.type).includes('replacement') ? 'green.500' : null}
+										bg={i.data.map(i => i.type).includes('keyword') ? 'yellow.emphasized' : null}
+									>
+										{i.content}
+									</Text>
+								</Tooltip>
+							)
+						})
+					}
+				</Box>
+				<HStack w="full" justifyContent="center" gap="4">
+					<PaginationRoot
+						variant="solid"
+						count={sentenceSplitted.length}
+						pageSize={1}
+						page={sectionRegulated + 1}
+						onPageChange={e => setSection(e.page - 1)}
+					>
+						<HStack>
+							<PaginationPrevTrigger disabled={isShowFull} />
+							<PaginationPageText format="short" />
+							<PaginationNextTrigger disabled={isShowFull} />
+						</HStack>
+					</PaginationRoot>
+					<ClipboardRoot value={sentenceParsed.map(i => i.content).join('')}>
+						<ClipboardIconButton size="sm" />
+					</ClipboardRoot>
+					<SwitchRoot checked={isShowFull} onCheckedChange={e => setIsShowFull(e.checked)}>
+						<SwitchHiddenInput></SwitchHiddenInput>
+						<SwitchControl>
+							<SwitchThumb></SwitchThumb>
+						</SwitchControl>
+						<SwitchLabel>全文</SwitchLabel>
+					</SwitchRoot>
+				</HStack>
+			</SimpleGrid>
+		</Theme>
 	)
 }

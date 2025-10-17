@@ -1,4 +1,4 @@
-import { HStack } from '@chakra-ui/react'
+import { HStack, Theme } from '@chakra-ui/react'
 import { useKeywords } from '../atoms/keywords'
 import { Keyword } from './Keyword'
 import { KeywordAdd } from './KeywordAdd'
@@ -6,13 +6,15 @@ import { KeywordAdd } from './KeywordAdd'
 export const KeywordListPanel = () => {
 	const [keywords] = useKeywords()
 	return (
-		<HStack flexWrap="wrap">
-			{
-				keywords.map((keyword, index) => (
-					<Keyword key={index} index={index}></Keyword>
-				))
-			}
-			<KeywordAdd></KeywordAdd>
-		</HStack>
+		<Theme appearance="dark" h="full">
+			<HStack flexWrap="wrap" alignContent="flex-start" p={2} overflowY="auto" h="full">
+				{
+					keywords.map((keyword, index) => (
+						<Keyword key={index} index={index}></Keyword>
+					))
+				}
+				<KeywordAdd></KeywordAdd>
+			</HStack>
+		</Theme>
 	)
 }

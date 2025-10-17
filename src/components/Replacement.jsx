@@ -17,6 +17,7 @@ export const Replacement = ({ index }) => {
 				aria-label="前"
 				placeholder=""
 				size="xs"
+				variant="subtle"
 				value={replacements[index].from}
 				onChange={e => editReplacement(index, { from: e.target.value })}
 			></Input>
@@ -25,6 +26,7 @@ export const Replacement = ({ index }) => {
 				aria-label="後"
 				placeholder=""
 				size="xs"
+				variant="subtle"
 				value={replacements[index].to}
 				onChange={e => editReplacement(index, { to: e.target.value })}
 			></Input>

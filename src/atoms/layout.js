@@ -2,9 +2,8 @@ import { atom, useAtom } from 'jotai'
 
 export const layoutAtom = atom(localStorage.getItem('ramune314159265.kaidanhakuTool.layout') === null ? {
 	global: {
+		splitterEnableHandle: true,
 		tabSetEnableSingleTabStretch: true,
-		tabEnableClose: false,
-		tabSetEnableClose: false,
 		tabEnablePopout: true
 	},
 	borders: [],
@@ -14,7 +13,7 @@ export const layoutAtom = atom(localStorage.getItem('ramune314159265.kaidanhakuT
 		children: [
 			{
 				type: 'row',
-				weight: 50,
+				weight: 30,
 				children: [
 					{
 						type: 'tabset',
@@ -42,11 +41,11 @@ export const layoutAtom = atom(localStorage.getItem('ramune314159265.kaidanhakuT
 			},
 			{
 				type: 'row',
-				weight: 50,
+				weight: 70,
 				children: [
 					{
 						type: 'tabset',
-						weight: 70,
+						weight: 75,
 						children: [
 							{
 								type: 'tab',
@@ -61,7 +60,7 @@ export const layoutAtom = atom(localStorage.getItem('ramune314159265.kaidanhakuT
 					},
 					{
 						type: 'tabset',
-						weight: 30,
+						weight: 25,
 						children: [
 							{
 								type: 'tab',

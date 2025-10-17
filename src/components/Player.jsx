@@ -9,7 +9,7 @@ import {
 	SelectTrigger,
 	SelectValueText
 } from "@/components/ui/select"
-import { defineStyle, Grid, Input } from '@chakra-ui/react'
+import { Grid, Input } from '@chakra-ui/react'
 import { usePlayers } from '../atoms/players'
 import { jobsCollection } from '../utils/jobs'
 
@@ -23,12 +23,14 @@ export const Player = ({ uuid }) => {
 				className="peer"
 				placeholder=""
 				size="xs"
+				variant="subtle"
 				value={players[uuid].name}
 				onChange={e => editPlayer(uuid, { name: e.target.value })}
 			></Input>
 
 			<SelectRoot
 				size="xs"
+				variant="subtle"
 				w="full"
 				aria-label="役職"
 				collection={jobsCollection}
@@ -50,6 +52,7 @@ export const Player = ({ uuid }) => {
 			<NumberInputRoot
 				w="full"
 				size="xs"
+				variant="subtle"
 				aria-label="数字"
 				min={1}
 				max={6}
@@ -64,6 +67,7 @@ export const Player = ({ uuid }) => {
 			<NumberInputRoot
 				w="full"
 				size="xs"
+				variant="subtle"
 				aria-label="HP"
 				min={0}
 				allowMouseWheel
@@ -76,25 +80,3 @@ export const Player = ({ uuid }) => {
 		</Grid>
 	)
 }
-
-const floatingStyles = defineStyle({
-	pos: "absolute",
-	bg: "bg",
-	px: "0.5",
-	fontSize: "xs",
-	top: "-3",
-	insetStart: "2",
-	fontWeight: "normal",
-	pointerEvents: "none",
-	transition: "position",
-	_peerPlaceholderShown: {
-		color: "fg.muted",
-		top: "1.5",
-		insetStart: "3",
-	},
-	_peerFocusVisible: {
-		color: "fg",
-		top: "-3",
-		insetStart: "2",
-	},
-})

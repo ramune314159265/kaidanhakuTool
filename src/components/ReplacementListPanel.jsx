@@ -24,8 +24,8 @@ export const ReplacementListPanel = () => {
 				</Grid>
 				<Separator w="full" />
 				{
-					replacements.map((_, index) => (
-						<Replacement index={index} key={index}></Replacement>
+					replacements.map((data, index) => (
+						<Replacement index={index} key={(data.from ?? '') + (data.to ?? '') + index}></Replacement>
 					))
 				}
 				<Separator w="full" />

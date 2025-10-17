@@ -20,12 +20,23 @@ export const useReplacements = () => {
 		])
 	}
 
-	const editReplacement = (index, overrides) => {
+	const deleteKeyword = (index) => {
 		const copy = [...replacements]
-		copy[index] = {
+		copy.splice(index)
+		setReplacements(copy)
+	}
+
+	const editReplacement = (index, overrides) => {
+		const data = {
 			...replacements[index],
 			...overrides
 		}
+		if (!data.from || !data.to) {
+			deleteKeyword(index)
+			return
+		}
+		const copy = [...replacements]
+		copy[index] = data
 		setReplacements(copy)
 	}
 	return [replacements, { setReplacements, addReplacement, editReplacement }]

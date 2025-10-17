@@ -1,10 +1,17 @@
 import { Grid, Input, Text } from '@chakra-ui/react'
+import { useState } from 'react'
 import { usePlayers } from '../atoms/players'
 import { useReplacements } from '../atoms/replacements'
 
 export const Replacement = ({ index }) => {
 	const [replacements, { editReplacement }] = useReplacements()
 	const [players] = usePlayers()
+	const [from, setFrom] = useState(replacements[index].from)
+	const [to, setTo] = useState(replacements[index].to)
+	const onSubmit = () => {
+		editReplacement(index, { from, to })
+	}
+
 	return (
 		<Grid w="full" gap="2" templateColumns="1fr 2fr 2fr" alignItems="center">
 			<Text
@@ -18,8 +25,12 @@ export const Replacement = ({ index }) => {
 				placeholder=""
 				size="xs"
 				variant="subtle"
-				value={replacements[index].from}
-				onChange={e => editReplacement(index, { from: e.target.value })}
+				value={from}
+				onChange={e => setFrom(e.target.value)}
+				onKeyDown={e => {
+					if (e.key === 'Enter') onSubmit()
+				}}
+				onBlur={onSubmit}
 			></Input>
 			<Input
 				w="full"
@@ -27,8 +38,12 @@ export const Replacement = ({ index }) => {
 				placeholder=""
 				size="xs"
 				variant="subtle"
-				value={replacements[index].to}
-				onChange={e => editReplacement(index, { to: e.target.value })}
+				value={to}
+				onChange={e => setTo(e.target.value)}
+				onKeyDown={e => {
+					if (e.key === 'Enter') onSubmit()
+				}}
+				onBlur={onSubmit}
 			></Input>
 		</Grid>
 	)

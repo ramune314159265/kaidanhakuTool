@@ -16,8 +16,8 @@ export const KeywordAdd = () => {
 	}
 	const onPaste = e => {
 		const text = e.clipboardData.getData('text')
-		const deleteRegExp = new RegExp('[①-⑳]|[㉑-㊿]|「|」|　|\\*', 'g')
-		const splitterRegExp = new RegExp('\\n|、')
+		const deleteRegExp = new RegExp('[①-⑳]|[㉑-㊿]|「|」|\\*', 'g')
+		const splitterRegExp = new RegExp('\\n|、|　')
 		const marksDeleted = text.replace(deleteRegExp, '')
 		const splitted = marksDeleted
 			.split(splitterRegExp)

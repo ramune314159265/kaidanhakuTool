@@ -10,7 +10,7 @@ export const KeywordListPanel = () => {
 			<HStack flexWrap="wrap" alignContent="flex-start" p={2} overflowY="auto" h="full">
 				{
 					keywords.map((keyword, index) => (
-						<Keyword key={index} index={index}></Keyword>
+						<Keyword key={keyword + index} index={index}></Keyword>
 					))
 				}
 				<KeywordAdd></KeywordAdd>

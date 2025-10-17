@@ -10,6 +10,7 @@ export const Keyword = ({ index }) => {
 		}
 		editKeyword(index, value)
 	}
+
 	return (
 		<TagRoot size="xl">
 			<TagLabel>

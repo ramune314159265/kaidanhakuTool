@@ -28,7 +28,7 @@ export const useKeywords = () => {
 
 	const deleteKeyword = (index) => {
 		const copy = [...keywords]
-		copy.splice(index)
+		copy.splice(index, 1)
 		setKeywords(copy)
 	}
 

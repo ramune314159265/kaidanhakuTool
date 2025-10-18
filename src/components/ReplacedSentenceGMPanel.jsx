@@ -17,7 +17,7 @@ import { useOriginalSentence } from '../atoms/sentence'
 import { parseSentence } from '../utils/parser'
 import { PopupWindowWrapper } from './PopupWindowWrapper'
 
-export const ReplacedSentencePanel = () => {
+export const ReplacedSentenceGMPanel = () => {
 	const [originalSentence] = useOriginalSentence()
 	const [replacements] = useReplacements()
 	const [keywords] = useKeywords()

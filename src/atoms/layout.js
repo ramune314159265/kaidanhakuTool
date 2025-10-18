@@ -53,8 +53,12 @@ export const layoutAtom = atom(localStorage.getItem('ramune314159265.kaidanhakuT
 								component: 'originalSentence'
 							}, {
 								type: 'tab',
-								name: '置き換え後の文章',
-								component: 'replacedSentence'
+								name: '置き換え後の文章(GM)',
+								component: 'replacedSentenceGM'
+							}, {
+								type: 'tab',
+								name: '置き換え後の文章(プレイヤー)',
+								component: 'replacedSentencePlayer'
 							}
 						]
 					},

@@ -8,7 +8,8 @@ export const PanelAddMenu = ({ id, model }) => {
 		{ id: 'playerList', name: 'プレイヤー一覧' },
 		{ id: 'replacementList', name: '置き換え一覧' },
 		{ id: 'originalSentence', name: '元の文章' },
-		{ id: 'replacedSentence', name: '置き換え後の文章' },
+		{ id: 'replacedSentenceGM', name: '置き換え後の文章(GM)' },
+		{ id: 'replacedSentencePlayer', name: '置き換え後の文章(プレイヤー)' },
 		{ id: 'keywordList', name: 'キーワード一覧' },
 	]
 

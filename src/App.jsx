@@ -7,7 +7,8 @@ import { KeywordListPanel } from './components/KeywordListPanel'
 import { OriginalSentencePanel } from './components/OriginalSentencePanel'
 import { PanelAddMenu } from './components/PanelAddMenu'
 import { PlayerListPanel } from './components/PlayerListPanel'
-import { ReplacedSentencePanel } from './components/ReplacedSentencePanel'
+import { ReplacedSentenceGMPanel } from './components/ReplacedSentenceGMPanel'
+import { ReplacedSentencePlayerPanel } from './components/ReplacedSentencePlayerPanel'
 import { ReplacementListPanel } from './components/ReplacementListPanel'
 import './flexlayout.css'
 
@@ -17,9 +18,10 @@ function App() {
         if (id === 'playerList') return <PlayerListPanel></PlayerListPanel>
         if (id === 'replacementList') return <ReplacementListPanel></ReplacementListPanel>
         if (id === 'originalSentence') return <OriginalSentencePanel></OriginalSentencePanel>
-        if (id === 'replacedSentence') return <ReplacedSentencePanel></ReplacedSentencePanel>
+        if (id === 'replacedSentenceGM') return <ReplacedSentenceGMPanel></ReplacedSentenceGMPanel>
+        if (id === 'replacedSentencePlayer') return <ReplacedSentencePlayerPanel></ReplacedSentencePlayerPanel>
         if (id === 'keywordList') return <KeywordListPanel></KeywordListPanel>
-        return <div></div>
+        return <div>不明なパネル</div>
     }
     const factory = node => {
         const comp = node.getComponent()
@@ -41,6 +43,7 @@ function App() {
                     <Layout
                         model={model}
                         factory={factory}
+                        popoutWindowName="怪談白"
                         onModelChange={() => saveLayout(model.toJson())}
                         onRenderTabSet={onRenderTabSet}
                     />

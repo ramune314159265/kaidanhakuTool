@@ -6,7 +6,7 @@ import {
 	PaginationRoot
 } from "@/components/ui/pagination"
 import { Tooltip } from "@/components/ui/tooltip"
-import { Box, HStack, SimpleGrid, SwitchControl, SwitchHiddenInput, SwitchLabel, SwitchRoot, SwitchThumb, Text, Theme } from '@chakra-ui/react'
+import { Box, HStack, SimpleGrid, SwitchControl, SwitchHiddenInput, SwitchLabel, SwitchRoot, SwitchThumb, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import { HiArrowRight } from 'react-icons/hi2'
 import { useKeywords } from '../atoms/keywords'
@@ -15,6 +15,7 @@ import { useReplacements } from '../atoms/replacements'
 import { useSection } from '../atoms/section'
 import { useOriginalSentence } from '../atoms/sentence'
 import { parseSentence } from '../utils/parser'
+import { PopupWindowWrapper } from './PopupWindowWrapper'
 
 export const ReplacedSentencePanel = () => {
 	const [originalSentence] = useOriginalSentence()
@@ -30,7 +31,7 @@ export const ReplacedSentencePanel = () => {
 
 	const sentenceParsed = parseSentence(sentenceToShow, { replacements, keywords })
 	return (
-		<Theme appearance="dark" h="full">
+		<PopupWindowWrapper>
 			<SimpleGrid templateRows="1fr 44px" h="full" position="relative">
 				<Box
 					paddingInline="3"
@@ -113,6 +114,6 @@ export const ReplacedSentencePanel = () => {
 					</SwitchRoot>
 				</HStack>
 			</SimpleGrid>
-		</Theme>
+		</PopupWindowWrapper>
 	)
 }

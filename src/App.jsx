@@ -33,7 +33,6 @@ function App() {
         )
     }
 
-
     return (
         <>
             <Grid templateRows="3rem calc(100% - 3rem)" w="100dvw" h="100dvh" position="relative">

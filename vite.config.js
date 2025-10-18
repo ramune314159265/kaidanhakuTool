@@ -12,6 +12,11 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
+      workbox: {
+        navigateFallbackDenylist: [
+          /\?.+/
+        ]
+      },
       manifest: {
         name: '怪談白ツール',
         description: '怪談白やるときのGM向け補助ツール',

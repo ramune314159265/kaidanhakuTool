@@ -1,8 +1,9 @@
 import { ClipboardIconButton, ClipboardRoot } from "@/components/ui/clipboard"
-import { Button, Float, Grid, Separator, Text, Theme, VStack } from '@chakra-ui/react'
+import { Button, Float, Grid, Separator, Text, VStack } from '@chakra-ui/react'
 import { HiMiniPlus } from 'react-icons/hi2'
 import { usePlayers } from '../atoms/players'
 import { useReplacements } from '../atoms/replacements'
+import { PopupWindowWrapper } from './PopupWindowWrapper'
 import { Replacement } from './Replacement'
 import { ReplacementAddDialog } from './ReplacementAddDialog'
 
@@ -10,7 +11,7 @@ export const ReplacementListPanel = () => {
 	const [players] = usePlayers()
 	const [replacements] = useReplacements()
 	return (
-		<Theme appearance="dark" h="full">
+		<PopupWindowWrapper>
 			<VStack position="relative" p={2} overflowY="auto" h="full">
 				<Float offset="4">
 					<ClipboardRoot value={replacements.map(r => `${players[r.playerId].name} ${r.from} → ${r.to}`).join('\n')}>
@@ -33,6 +34,6 @@ export const ReplacementListPanel = () => {
 					<Button size="xs" w="full"><HiMiniPlus /> 置き換えを追加</Button>
 				</ReplacementAddDialog>
 			</VStack>
-		</Theme>
+		</PopupWindowWrapper>
 	)
 }

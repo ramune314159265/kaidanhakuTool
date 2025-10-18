@@ -1,14 +1,15 @@
 import { ClipboardIconButton, ClipboardRoot } from "@/components/ui/clipboard"
-import { Float, Grid, Separator, Text, Theme, VStack } from '@chakra-ui/react'
+import { Float, Grid, Separator, Text, VStack } from '@chakra-ui/react'
 import { usePlayers } from '../atoms/players'
 import { jobs } from '../utils/jobs'
 import { Player } from './Player'
 import { PlayerAdd } from './PlayerAdd'
+import { PopupWindowWrapper } from './PopupWindowWrapper'
 
 export const PlayerListPanel = () => {
 	const [players] = usePlayers()
 	return (
-		<Theme appearance="dark" h="full">
+		<PopupWindowWrapper>
 			<VStack position="relative" p={2} overflowY="auto" h="full">
 				<Float offset="4">
 					<ClipboardRoot value={Object.values(players).map(p => `${p.name}（${jobs[p.jobId].name}） HP${p.hp} 数字${p.rollValue}`).join('\n')}>
@@ -30,6 +31,6 @@ export const PlayerListPanel = () => {
 				<Separator w="full" />
 				<PlayerAdd></PlayerAdd>
 			</VStack>
-		</Theme>
+		</PopupWindowWrapper>
 	)
 }

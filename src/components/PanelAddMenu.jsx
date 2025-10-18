@@ -1,6 +1,6 @@
 import { Actions, DockLocation } from 'flexlayout-react'
 import { Item, Menu, useContextMenu } from 'react-contexify'
-import { RxPlus } from 'react-icons/rx'
+import { FaPlus } from 'react-icons/fa6'
 
 export const PanelAddMenu = ({ id, model }) => {
 	const { show } = useContextMenu({ id: 'add' + id })
@@ -22,7 +22,7 @@ export const PanelAddMenu = ({ id, model }) => {
 					e.stopPropagation()
 				}}
 			>
-				<RxPlus fill='var(--color-icon)'></RxPlus>
+				<FaPlus color='var(--color-icon)'></FaPlus>
 			</button>
 			<Menu id={'add' + id} theme="dark">
 				{

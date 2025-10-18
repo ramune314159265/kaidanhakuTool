@@ -1,12 +1,13 @@
-import { HStack, Theme } from '@chakra-ui/react'
+import { HStack } from '@chakra-ui/react'
 import { useKeywords } from '../atoms/keywords'
 import { Keyword } from './Keyword'
 import { KeywordAdd } from './KeywordAdd'
+import { PopupWindowWrapper } from './PopupWindowWrapper'
 
 export const KeywordListPanel = () => {
 	const [keywords] = useKeywords()
 	return (
-		<Theme appearance="dark" h="full">
+		<PopupWindowWrapper>
 			<HStack flexWrap="wrap" alignContent="flex-start" p={2} overflowY="auto" h="full">
 				{
 					keywords.map((keyword, index) => (
@@ -15,6 +16,6 @@ export const KeywordListPanel = () => {
 				}
 				<KeywordAdd></KeywordAdd>
 			</HStack>
-		</Theme>
+		</PopupWindowWrapper>
 	)
 }

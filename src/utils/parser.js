@@ -1,27 +1,88 @@
-const replacementParser = (data, replacements) => {
-	return replacements.reduce((dataList, replacement) => {
-		return dataList.flatMap(data => {
-			return data.content
-				.split(new RegExp(`(${replacement.from})`))
-				.filter(e => e !== '')
-				.map(e => {
-					return e === replacement.from
-						? {
-							content: replacement.to,
-							data: [
-								...data.data,
-								{
-									type: 'replacement',
-									...replacement
-								}
-							]
-						} : {
-							content: e,
-							data: data.data
-						}
+function replacementParser(data, replacements) {
+	let chars = []
+
+	for (const segment of data) {
+		for (const char of segment.content) {
+			chars.push({
+				char,
+				replacementHistory: [...segment.data]
+			})
+		}
+	}
+
+	for (const replacement of replacements) {
+		const { from, to, ...metadata } = replacement
+		let newChars = []
+		let i = 0
+
+		while (i < chars.length) {
+			let match = true
+			let matchChars = []
+
+			for (let j = 0; j < from.length && i + j < chars.length; j++) {
+				if (chars[i + j].char === from[j]) {
+					matchChars.push(chars[i + j])
+				} else {
+					match = false
+					break
+				}
+			}
+
+			if (match && matchChars.length === from.length) {
+				const history = matchChars[0].replacementHistory || []
+				const newHistory = [
+					...history,
+					{ type: 'replacement', from, to, ...metadata }
+				]
+
+				for (const char of to) {
+					newChars.push({
+						char,
+						replacementHistory: newHistory
+					})
+				}
+
+				i += from.length
+			} else {
+				newChars.push(chars[i])
+				i++
+			}
+		}
+
+		chars = newChars
+	}
+
+	const result = []
+	let currentGroup = null
+
+	for (const charData of chars) {
+		const historyKey = JSON.stringify(charData.replacementHistory)
+
+		if (!currentGroup || currentGroup.historyKey !== historyKey) {
+			if (currentGroup) {
+				result.push({
+					content: currentGroup.content,
+					data: currentGroup.history
 				})
+			}
+			currentGroup = {
+				content: charData.char,
+				history: charData.replacementHistory,
+				historyKey
+			}
+		} else {
+			currentGroup.content += charData.char
+		}
+	}
+
+	if (currentGroup) {
+		result.push({
+			content: currentGroup.content,
+			data: currentGroup.history
 		})
-	}, data)
+	}
+
+	return result
 }
 
 const keywordParser = (data, keywords) => {

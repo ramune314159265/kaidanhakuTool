@@ -8,11 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   base: './',
   plugins: [
-    react({
-      babel: {
-        plugins: ['babel-plugin-react-compiler'],
-      },
-    }),
+    react(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',

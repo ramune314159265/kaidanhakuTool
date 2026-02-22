@@ -18,7 +18,8 @@ export const ReplacementListPanel = () => {
 						<ClipboardIconButton />
 					</ClipboardRoot>
 				</Float>
-				<Grid w="full" gap="2" templateColumns="1fr 2fr 2fr">
+				<Grid w="full" gap="2" templateColumns="24px 1fr 2fr 2fr">
+					<Text fontSize="xs">有効</Text>
 					<Text fontSize="xs">プレイヤー名</Text>
 					<Text fontSize="xs">前</Text>
 					<Text fontSize="xs">後</Text>

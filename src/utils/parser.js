@@ -11,7 +11,10 @@ function replacementParser(data, replacements) {
 	}
 
 	for (const replacement of replacements) {
-		const { from, to, ...metadata } = replacement
+		const { from, to, enabled, ...metadata } = replacement
+		if (!enabled) {
+			continue
+		}
 		let newChars = []
 		let i = 0
 

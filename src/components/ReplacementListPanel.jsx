@@ -11,10 +11,10 @@ import { ReplacementAddDialog } from './ReplacementAddDialog'
 export const ReplacementListPanel = () => {
 	const [players] = usePlayers()
 	const [replacements] = useReplacements()
-	const replacementLendthRef = useRef(replacements.length)
+	const replacementLengthRef = useRef(replacements.length)
 	const buttonRef = useRef(null)
 	useEffect(() => {
-		if (replacementLendthRef.current < replacements.length) {
+		if (replacementLengthRef.current < replacements.length) {
 			buttonRef.current?.scrollIntoView?.()
 		}
 	}, [replacements.length])
